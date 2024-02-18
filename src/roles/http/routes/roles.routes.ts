@@ -1,25 +1,20 @@
-import { Role } from '@roles/entities/Role'
+import { AppError } from '@shared/errors/AppError'
 import { Router } from 'express'
+import { RoleRepository } from '@roles/repositories/RoleRepository'
 
 const rolesRouter = Router()
-
-const roules: Array<Role> = [
-  {
-    uuid: 'e3b3d3a9-e768-4624-a496-a1c5bdcfb37d',
-    name: 'Administrador',
-    created_at: new Date(),
-  },
-]
+const repository = new RoleRepository()
 
 rolesRouter.post('/', (request, response) => {
   const { name } = request.body
-  const role = new Role(name)
-  roules.push(role)
-  return response.status(201).json(role)
-})
 
-rolesRouter.get('/', (request, response) => {
-  return response.json({ message: 'Olá mundo' })
+  if (!name || name === '') {
+    throw new AppError('property name is required')
+  }
+
+  const role = repository.create(name)
+
+  return response.status(201).json(role)
 })
 
 export { rolesRouter }
