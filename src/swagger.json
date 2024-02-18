@@ -9,5 +9,45 @@
       "email": "rafael_martins_182@hotmail.com"
     }
   },
-  "": ""
+  "paths": {
+    "/roles": {
+      "post": {
+        "tags": ["Role"],
+        "summary": "Create a role",
+        "description": "Create new role",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Role created"
+          },
+          "400": {
+            "description": "Role alredy exists or Role name is required"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Role"],
+        "summary": "List all roles",
+        "description": "Returns all roles",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  }
 }
