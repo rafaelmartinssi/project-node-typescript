@@ -1,20 +1,13 @@
-import { AppError } from '@shared/errors/AppError'
 import { Router } from 'express'
 import { RoleRepository } from '@roles/repositories/RoleRepository'
+import { CreateRoleController } from '@roles/useCases/createRole/CreateRoleController'
 
 const rolesRouter = Router()
 const repository = new RoleRepository()
+const controller = new CreateRoleController()
 
 rolesRouter.post('/', (request, response) => {
-  const { name } = request.body
-
-  if (!name || name === '') {
-    throw new AppError('property name is required')
-  }
-
-  const role = repository.create(name)
-
-  return response.status(201).json(role)
+  return controller.handle(request, response)
 })
 
 rolesRouter.get('/', (request, response) => {

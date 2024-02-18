@@ -18,4 +18,12 @@ export class RoleRepository {
   public findAll(): Array<Role> {
     return this.roles
   }
+
+  public findByName(name: string): boolean {
+    return this.roles.some(element => element.name === name)
+  }
+
+  public checkByName(name?: string): boolean {
+    return name && name !== ''
+  }
 }
