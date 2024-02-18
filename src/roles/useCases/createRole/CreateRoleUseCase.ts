@@ -3,7 +3,7 @@ import { RoleRepository } from '@roles/repositories/RoleRepository'
 import { AppError } from '@shared/errors/AppError'
 
 export class CreateRoleUseCase {
-  private repository = new RoleRepository()
+  private repository = RoleRepository.getInstance()
 
   execute(props: CreateRoleDTO): Role {
     const { name } = props

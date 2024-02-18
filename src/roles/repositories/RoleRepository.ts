@@ -9,6 +9,17 @@ export class RoleRepository {
     },
   ]
 
+  private static INSTANCE: RoleRepository
+
+  private constructor() {}
+
+  public static getInstance(): RoleRepository {
+    if (!RoleRepository.INSTANCE) {
+      RoleRepository.INSTANCE = new RoleRepository()
+    }
+    return RoleRepository.INSTANCE
+  }
+
   public create(name: string): Role {
     const role = new Role(name)
     this.roles.push(role)
