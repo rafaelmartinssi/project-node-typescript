@@ -3,7 +3,7 @@ import { Role } from '@roles/entities/Role'
 export class RoleRepository {
   private roles: Role[] = [
     {
-      uuid: 'e3b3d3a9-e768-4624-a496-a1c5bdcfb37d',
+      id: 'e3b3d3a9-e768-4624-a496-a1c5bdcfb37d',
       name: 'Administrador',
       created_at: new Date(),
     },
