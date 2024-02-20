@@ -5,10 +5,10 @@ import { CreateRoleUseCase } from './CreateRoleUseCase'
 export class CreateRoleController {
   private useCase = new CreateRoleUseCase()
 
-  public handle(request: Request, response: Response): Response {
+  public async handle(request: Request, response: Response): Promise<Response> {
     const dto: CreateRoleDTO = request.body
 
-    const role = this.useCase.execute(dto)
+    const role = await this.useCase.execute(dto)
 
     return response.status(201).json(role)
   }

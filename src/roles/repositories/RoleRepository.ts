@@ -1,17 +1,28 @@
 import { Role } from '@roles/entities/Role'
+import { dataSource } from '@shared/typeorm'
+import { Repository } from 'typeorm'
+
+export type PaginationParams = {
+  page: number
+  skip: number
+  take: number
+}
+
+export type PaginationProps = {
+  per_page: number
+  total: number
+  current_page: number
+  data: Role[]
+}
 
 export class RoleRepository {
-  private roles: Role[] = [
-    {
-      id: 'e3b3d3a9-e768-4624-a496-a1c5bdcfb37d',
-      name: 'Administrador',
-      created_at: new Date(),
-    },
-  ]
+  private repository: Repository<Role>
 
   private static INSTANCE: RoleRepository
 
-  private constructor() {}
+  private constructor() {
+    this.repository = dataSource.getRepository(Role)
+  }
 
   public static getInstance(): RoleRepository {
     if (!RoleRepository.INSTANCE) {
@@ -20,21 +31,46 @@ export class RoleRepository {
     return RoleRepository.INSTANCE
   }
 
-  public create(name: string): Role {
-    const role = new Role(name)
-    this.roles.push(role)
-    return role
+  public async create(name: string): Promise<Role> {
+    const role = this.repository.create({ name })
+    console.log(role)
+    return this.repository.save(role)
   }
 
-  public findAll(): Array<Role> {
-    return this.roles
+  public async update(role: Role): Promise<Role> {
+    return this.repository.save(role)
   }
 
-  public findByName(name: string): boolean {
-    return this.roles.some(element => element.name === name)
+  public async delete(id: string): Promise<void> {
+    await this.repository.delete(id)
   }
 
-  public checkByName(name?: string): boolean {
-    return name && name !== ''
+  public async findAll({
+    page,
+    skip,
+    take,
+  }: PaginationParams): Promise<PaginationProps> {
+    const [roles, count] = await this.repository
+      .createQueryBuilder()
+      .skip(skip)
+      .take(take)
+      .getManyAndCount()
+
+    const result = {
+      per_page: take,
+      total: count,
+      current_page: page,
+      data: roles,
+    } as PaginationProps
+
+    return result
+  }
+
+  public async findByName(name: string): Promise<Role | null> {
+    return this.repository.findOneBy({ name })
+  }
+
+  public async findById(id: string): Promise<Role | null> {
+    return this.repository.findOneBy({ id })
   }
 }

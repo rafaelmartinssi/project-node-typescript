@@ -1,10 +1,19 @@
-import { Role } from '@roles/entities/Role'
-import { RoleRepository } from '@roles/repositories/RoleRepository'
+import {
+  PaginationProps,
+  RoleRepository,
+} from '@roles/repositories/RoleRepository'
+
+type UseCaseParams = {
+  page: number
+  limit: number
+}
 
 export class ListRolesUseCase {
   private repository = RoleRepository.getInstance()
 
-  execute(): Array<Role> {
-    return this.repository.findAll()
+  async execute({ page, limit }: UseCaseParams): Promise<PaginationProps> {
+    const take = limit
+    const skip = (Number(page) - 1) * take
+    return this.repository.findAll({ page, skip, take })
   }
 }

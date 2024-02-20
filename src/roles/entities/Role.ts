@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from 'uuid'
 export class Role {
   @PrimaryColumn()
   id: string
-  @Column()
-  created_at: Date
   @CreateDateColumn()
+  created_at: Date
+  @Column()
   name: string
 
   constructor(name: string) {
