@@ -12,9 +12,9 @@
   "paths": {
     "/roles": {
       "post": {
-        "tags": ["Role"],
-        "summary": "Create a role",
-        "description": "Create new role",
+        "tags": ["Roles"],
+        "summary": "Create role",
+        "description": "Create role",
         "requestBody": {
           "content": {
             "application/json": {
@@ -57,9 +57,9 @@
         }
       },
       "get": {
-        "tags": ["Role"],
-        "summary": "List all roles",
-        "description": "Returns all roles",
+        "tags": ["Roles"],
+        "summary": "List roles",
+        "description": "Returns roles",
         "parameters": [
           {
             "name": "page",
@@ -103,6 +103,68 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "put": {
+        "tags": ["Roles"],
+        "summary": "Update role",
+        "description": "Update role",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identify of a role",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "label"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }
