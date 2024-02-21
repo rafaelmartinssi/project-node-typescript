@@ -60,9 +60,49 @@
         "tags": ["Role"],
         "summary": "List all roles",
         "description": "Returns all roles",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of page",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "page=1"
+            },
+            "style": "label"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of registry per page",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "limit=15"
+            },
+            "style": "label"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "per_page": 15,
+                  "total": 2,
+                  "current_page": 1,
+                  "data": [
+                    {
+                      "name": "ADM",
+                      "id": "55a30844-dcb6-40e1-9114-6a07bfab2e34",
+                      "created_at": "2024-02-20T01:42:42.748Z"
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
