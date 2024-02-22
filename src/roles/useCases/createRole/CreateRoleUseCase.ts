@@ -1,9 +1,14 @@
 import { CreateRoleDTO, Role } from '@roles/entities/Role'
-import { RoleRepository } from '@roles/repositories/RoleRepository'
+import { IRoleRepository } from '@roles/repositories/IRoleRepository'
 import { AppError } from '@shared/errors/AppError'
+import { injectable, inject } from 'tsyringe'
 
+@injectable()
 export class CreateRoleUseCase {
-  private repository = RoleRepository.getInstance()
+  constructor(
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
+  ) {}
 
   public checkByName(name?: string): boolean {
     return name && name !== ''
@@ -18,12 +23,12 @@ export class CreateRoleUseCase {
       throw new AppError('property name is required')
     }
 
-    const roleAlredyExists = await this.repository.findByName(name)
+    const roleAlredyExists = await this.roleRepository.findByName(name)
 
     if (roleAlredyExists) {
       throw new AppError('property name already exists')
     }
 
-    return await this.repository.create(name)
+    return await this.roleRepository.create(name)
   }
 }

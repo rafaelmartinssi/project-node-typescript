@@ -1,19 +1,24 @@
 import {
+  IRoleRepository,
   PaginationProps,
-  RoleRepository,
-} from '@roles/repositories/RoleRepository'
+} from '@roles/repositories/IRoleRepository'
+import { injectable, inject } from 'tsyringe'
 
 type UseCaseParams = {
   page: number
   limit: number
 }
 
+@injectable()
 export class ListRolesUseCase {
-  private repository = RoleRepository.getInstance()
+  constructor(
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
+  ) {}
 
   async execute({ page, limit }: UseCaseParams): Promise<PaginationProps> {
     const take = limit
     const skip = (Number(page) - 1) * take
-    return this.repository.findAll({ page, skip, take })
+    return this.roleRepository.findAll({ page, skip, take })
   }
 }

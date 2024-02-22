@@ -1,14 +1,16 @@
 import { Role } from '@roles/entities/Role'
-import { RoleRepository } from '@roles/repositories/RoleRepository'
+import { IRoleRepository } from '@roles/repositories/IRoleRepository'
 import { AppError } from '@shared/errors/AppError'
-
+import { injectable, inject } from 'tsyringe'
+@injectable()
 export class GetRoleUseCase {
-  private repository = RoleRepository.getInstance()
-
-  public constructor() {}
+  constructor(
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
+  ) {}
 
   public async execute(id: string): Promise<Role> {
-    const role = await this.repository.findById(id)
+    const role = await this.roleRepository.findById(id)
 
     if (!role) {
       throw new AppError('Role not found', 404)

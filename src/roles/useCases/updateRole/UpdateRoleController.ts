@@ -1,15 +1,15 @@
 import { Request, Response } from 'express'
 import { UpdateRoleUseCase } from './UpdateRoleUseCase'
+import { container } from 'tsyringe'
 
 export class UpdateRoleController {
-  private useCase = new UpdateRoleUseCase()
-
-  public constructor() {}
-
   public async handle(request: Request, response: Response): Promise<Response> {
     const { name } = request.body
+
+    const roleUseCase = container.resolve(UpdateRoleUseCase)
+
     const { id } = request.params
-    const role = await this.useCase.execute({ id, name })
+    const role = await roleUseCase.execute({ id, name })
     return response.status(200).json(role)
   }
 }

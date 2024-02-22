@@ -5,13 +5,14 @@ import { GetRoleController } from '@roles/useCases/getRole/GetRoleController'
 import { UpdateRoleController } from '@roles/useCases/updateRole/UpdateRoleController'
 import { RemoveRoleController } from '@roles/useCases/removeRole/RemoveRoleController'
 import { celebrate, Joi, Segments } from 'celebrate'
+import { container } from 'tsyringe'
 
 const rolesRouter = Router()
-const createRoleController = new CreateRoleController()
-const listRolesController = new ListRolesController()
-const getRoleController = new GetRoleController()
-const updateRoleController = new UpdateRoleController()
-const removeRoleController = new RemoveRoleController()
+const createRoleController = container.resolve(CreateRoleController)
+const listRolesController = container.resolve(ListRolesController)
+const getRoleController = container.resolve(GetRoleController)
+const removeRoleController = container.resolve(RemoveRoleController)
+const updateRoleController = container.resolve(UpdateRoleController)
 
 rolesRouter.post(
   '/',
