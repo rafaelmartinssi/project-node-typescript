@@ -167,6 +167,52 @@
             "description": "Not found"
           }
         }
+      },
+      "get": {
+        "tags": ["Roles"],
+        "summary": "Find role by id",
+        "description": "Find role by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identify of a role",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "label"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
       }
     }
   }
