@@ -8,24 +8,24 @@ import {
 } from '@roles/repositories/IRoleRepository'
 
 export class RoleRepository implements IRoleRepository {
-  private repository: Repository<Role>
+  private dataSource: Repository<Role>
 
   public constructor() {
-    this.repository = dataSource.getRepository(Role)
+    this.dataSource = dataSource.getRepository(Role)
   }
 
   public async create(name: string): Promise<Role> {
-    const role = this.repository.create({ name })
+    const role = this.dataSource.create({ name })
     console.log(role)
-    return this.repository.save(role)
+    return this.dataSource.save(role)
   }
 
   public async update(role: Role): Promise<Role> {
-    return this.repository.save(role)
+    return this.dataSource.save(role)
   }
 
   public async delete(id: string): Promise<void> {
-    await this.repository.delete(id)
+    await this.dataSource.delete(id)
   }
 
   public async findAll({
@@ -33,7 +33,7 @@ export class RoleRepository implements IRoleRepository {
     skip,
     take,
   }: PaginationParams): Promise<PaginationProps> {
-    const [roles, count] = await this.repository
+    const [roles, count] = await this.dataSource
       .createQueryBuilder()
       .skip(skip)
       .take(take)
@@ -50,10 +50,10 @@ export class RoleRepository implements IRoleRepository {
   }
 
   public async findByName(name: string): Promise<Role | null> {
-    return this.repository.findOneBy({ name })
+    return this.dataSource.findOneBy({ name })
   }
 
   public async findById(id: string): Promise<Role | null> {
-    return this.repository.findOneBy({ id })
+    return this.dataSource.findOneBy({ id })
   }
 }
