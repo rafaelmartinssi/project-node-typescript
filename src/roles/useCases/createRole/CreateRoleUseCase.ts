@@ -1,5 +1,8 @@
-import { CreateRoleDTO, Role } from '@roles/entities/Role'
-import { IRoleRepository } from '@roles/repositories/IRoleRepository'
+import { Role } from '@roles/entities/Role'
+import {
+  CreateRoleDTO,
+  IRoleRepository,
+} from '@roles/repositories/IRoleRepository'
 import { AppError } from '@shared/errors/AppError'
 import { injectable, inject } from 'tsyringe'
 
@@ -14,9 +17,7 @@ export class CreateRoleUseCase {
     return name && name !== ''
   }
 
-  public async execute(props: CreateRoleDTO): Promise<Role> {
-    const { name } = props
-
+  public async execute({ name }: CreateRoleDTO): Promise<Role> {
     const roleNameExists = this.checkByName(name)
 
     if (!roleNameExists) {

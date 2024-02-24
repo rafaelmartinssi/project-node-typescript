@@ -16,7 +16,3 @@ export class Role {
     this.created_at = new Date()
   }
 }
-
-export type CreateRoleDTO = {
-  name: string
-}
