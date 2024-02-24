@@ -27,6 +27,7 @@ export interface IUserRepository {
   update(user: User): Promise<User>
   findAll({ page, skip, take }: PaginationParams): Promise<PaginationProps>
   findByName(name: string): Promise<User | null>
+  findByEmail(email: string): Promise<User | null>
   findById(id: string): Promise<User | null>
   delete(id: string): Promise<void>
 }

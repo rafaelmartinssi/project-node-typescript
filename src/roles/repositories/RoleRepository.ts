@@ -16,7 +16,6 @@ export class RoleRepository implements IRoleRepository {
 
   public async create(name: string): Promise<Role> {
     const role = this.dataSource.create({ name })
-    console.log(role)
     return this.dataSource.save(role)
   }
 
