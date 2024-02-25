@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { isAutenticated } from '@shared/http/middlewares/isAutenticated'
 import { CreateRoleController } from '@roles/useCases/createRole/CreateRoleController'
 import { ListRolesController } from '@roles/useCases/listRoles/ListRolesController'
 import { GetRoleController } from '@roles/useCases/getRole/GetRoleController'
@@ -13,6 +14,8 @@ const listRolesController = container.resolve(ListRolesController)
 const getRoleController = container.resolve(GetRoleController)
 const removeRoleController = container.resolve(RemoveRoleController)
 const updateRoleController = container.resolve(UpdateRoleController)
+
+rolesRouter.use(isAutenticated)
 
 rolesRouter.post(
   '/',
