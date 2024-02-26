@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { instanceToInstance } from 'class-transformer'
-import { ShowProfileUseCase } from './showProfileUseCase'
+import { ShowProfileUseCase } from './ShowProfileUseCase'
 
 export class ShowProfileController {
   public async handle(request: Request, response: Response): Promise<Response> {

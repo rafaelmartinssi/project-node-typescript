@@ -7,7 +7,7 @@ import { CreateUserController } from '@users/useCases/createUser/CreateUserContr
 import { ListUsersController } from '@users/useCases/listUsers/ListUsersController'
 import { isAutenticated } from '@shared/http/middlewares/isAutenticated'
 import { UpdateAvatarController } from '@users/useCases/updateAvatar/UpdateAvatarContoller'
-import { ShowProfileController } from '@users/useCases/showProfile/showProfileController'
+import { ShowProfileController } from '@users/useCases/showProfile/ShowProfileController'
 import uploadConfig from '@config/upload'
 
 const usersRouter = Router()
