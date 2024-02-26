@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { instanceToInstance } from 'class-transformer'
-import { FindUserUseCase } from './FindUserUseCase'
+import { ShowProfileUseCase } from './showProfileUseCase'
 
-export class UpdateAvatarController {
+export class ShowProfileController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const userUseCase = container.resolve(FindUserUseCase)
+    const userUseCase = container.resolve(ShowProfileUseCase)
     const user = await userUseCase.execute({
       userId: request.user.id,
     })

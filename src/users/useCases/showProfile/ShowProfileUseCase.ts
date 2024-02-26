@@ -8,7 +8,7 @@ export type FindUserParams = {
 }
 
 @injectable()
-export class FindUserUseCase {
+export class ShowProfileUseCase {
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
