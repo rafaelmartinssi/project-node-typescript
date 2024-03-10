@@ -13,7 +13,7 @@ export class RefreshToken {
   token: string
 
   @Column()
-  valid: string
+  valid: boolean
 
   @Column()
   expires: Date
