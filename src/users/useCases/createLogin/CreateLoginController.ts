@@ -7,10 +7,12 @@ export class CreateLoginController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body
     const userUseCase = container.resolve(CreateLoginUseCase)
-    const { user, token } = await userUseCase.execute({
+    const { user, accessToken, refreshToken } = await userUseCase.execute({
       email,
       password,
     })
-    return response.status(201).json(instanceToInstance({ user, token }))
+    return response
+      .status(201)
+      .json(instanceToInstance({ user, accessToken, refreshToken }))
   }
 }

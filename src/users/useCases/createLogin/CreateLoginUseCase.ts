@@ -5,6 +5,7 @@ import jwtConfig from '@config/auth'
 import { AppError } from '@shared/errors/AppError'
 import { User } from '@users/entities/User'
 import { IUserRepository } from '@users/repositories/IUserRepository'
+import { IRefreshTokenRepository } from '@users/repositories/IRefreshTokenRepository'
 
 export type CreateLoginDTO = {
   email: string
@@ -13,7 +14,8 @@ export type CreateLoginDTO = {
 
 export type IResponse = {
   user: User
-  token: string
+  accessToken: string
+  refreshToken: string
 }
 
 @injectable()
@@ -21,6 +23,8 @@ export class CreateLoginUseCase {
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
+    @inject('RefreshTokenRepository')
+    private refreshTokenRepository: IRefreshTokenRepository,
   ) {}
 
   public async execute({
@@ -36,13 +40,30 @@ export class CreateLoginUseCase {
     if (!passwordConfirmed) {
       throw new AppError('Incorrect email/password combination', 401)
     }
-    const token = sign({}, jwtConfig.jwt.secret, {
+
+    const accessToken = sign({}, jwtConfig.jwt.secret, {
       subject: user.id,
       expiresIn: jwtConfig.jwt.expiresIn,
     })
+
+    const expires = new Date(Date.now() + jwtConfig.refreshToken.duration)
+
+    const refreshToken = sign({}, jwtConfig.refreshToken.secret, {
+      subject: user.id,
+      expiresIn: jwtConfig.refreshToken.expiresIn,
+    })
+
+    await this.refreshTokenRepository.create({
+      token: refreshToken,
+      expires,
+      user_id: user.id,
+      valid: true,
+    })
+
     return {
       user,
-      token,
+      accessToken,
+      refreshToken,
     }
   }
 }
